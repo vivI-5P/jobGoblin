@@ -1,7 +1,5 @@
 import g4p_controls.*;
 
-myJobs personalData; // variable that'll store username and saved jobs later
-
 // declaring global variables
 
 JSONObject output; // whole api resposne here
@@ -14,6 +12,8 @@ String jobFilter;
 int salaryExp; // users experience in the id industry
 
 boolean beganSearch = false; // tracking if user has started the search
+
+myJobs personalData; 
 
 void setup(){
   
