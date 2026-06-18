@@ -10,33 +10,47 @@ class myJobs {
     this.userName = n;
     this.jobData = new String[0];
   }
-  
+ 
   //methods
   
   void collectionOfData(JSONArray jobs){
     
-    if(jobs != null){ // testing only runs if got data from api
+    if(jobs != null){ // as long as jobs is not empty 
        for (int i=0; i<jobs.size();i++){ // need size for special array since its list
        // loops through all the jobs 
            String jobTitle = jobs.getJSONObject(i).getString("title"); // getting only title for now for the job 
        // for each job get json object and get its title for showing on main window
            String jobLink = jobs.getJSONObject(i).getString("redirect_url");
        
-           jobData = append(this.jobData, jobTitle + " - " + jobLink);            
+           jobData = append(this.jobData, jobTitle + " - " + jobLink); // adding the title and link to the jobdata array   
       }
     }    
   }
  
   void saveToFile(){
+    // creating users text file with their name
+    PrintWriter pw = createWriter(userName + "'s Jobs.html"); // using htm so urls are clickable in text file
     
-    PrintWriter pw = createWriter(userName + "'s Jobs.txt");
+    // making the job link in text file clickable
     
-   for (int i= 0; i<this.jobData.length; i++){
+    pw.println("<html><body>");
+    pw.println("<h2>Jobs for " + userName + "</h2>");
      
-     pw.println(this.jobData[i]);
-   }
-   pw.close(); 
+    // putting the jobs and their url into the users text file 
+    for (int i= 0; i<this.jobData.length; i++){
+   
+      String[] sections = this.jobData[i].split(" - "); // separating job title from url 
+      String jobTitle = sections[0]; // grabing the title
+      String jobLink = (sections.length > 1) ? sections[1] : ""; // if theres a job title and url, then take the url(2nd item) if not then use empty string
+      // ? is just a short form of a if-else statement
+    
+      pw.println(jobTitle + " - <a href='" + jobLink + "'>" + jobLink + "</a><br>");
+    }
+  
+    pw.println("</body></html>"); 
+    pw.close();  // closing and saving text file    
   }
+  
     
   void drawJobData(JSONArray jobs){
     
@@ -54,12 +68,12 @@ class myJobs {
     int y = 155;
     fill(255);
      
-    for (int i= 0; i<this.jobData.length; i++){
+    for (int i= 0; i<this.jobData.length; i++){ 
       textAlign(LEFT, TOP);
       textSize(17);
-      text(this.jobData[i], 50,y);
-      y += 45;
+      text(this.jobData[i], 50,y); // show job title and link on main window to user 
+      y += 45; // keeps the job data from overlapping
     }
-    y = 145; 
+    y = 145; //resetting
    }
-}
+ }
