@@ -23,10 +23,7 @@ public void nameAdded(GTextField source, GEvent event) { //_CODE_:nameTextBox:43
 
   if (event == GEvent.ENTERED){
     
-    personalData.userName = nameTextBox.getText(); 
-    // myHistory.userName = nameAdded.getText();
-    // user can save the job links they get to a file for future reference
-    
+    personalData.userName = nameTextBox.getText(); // getting users name    
   }
 
 } //_CODE_:nameTextBox:431292:
@@ -36,10 +33,8 @@ public void salaryExpectationAdded(GTextField source, GEvent event) { //_CODE_:s
 
   if (event == GEvent.ENTERED){
     
-    salaryExp = int (salaryTextBox.getText());       
-    // myHistory.experience = experienceTextBox.getText();
-    // user can save the job links they get to a file for future reference
-    
+    salaryExp = int (salaryTextBox.getText()); // getting the number user entered
+
   }
 
 } //_CODE_:salaryTextBox:785569:
@@ -47,7 +42,7 @@ public void salaryExpectationAdded(GTextField source, GEvent event) { //_CODE_:s
 public void exitButtonClicked(GButton source, GEvent event) { //_CODE_:exitButton:925472:
   println("exitButton - GButton >> GEvent." + event + " @ " + millis());
 
-  exit();
+  exit(); // closes the program
 
 } //_CODE_:exitButton:925472:
 
@@ -64,28 +59,27 @@ public void searchButtonClicked(GButton source, GEvent event) { //_CODE_:searchB
   jobFilter = ""; // intializing it empty at first
   
   // Adzuna API, need to cite  it  
-  // storing api url in string got from adzuna
-  
+  // storing api url in string
   String url = "https://api.adzuna.com/v1/api/jobs/ca/search/1?app_id=" + "7781b5b6" + "&app_key=" + "e2e06d46e21490095586c47b2cb7f36e" + "&what=" + "computer%20science" + "&where=Kitchener" + "&sort_by=salary" + "&salary_min=" + salaryExp;
   
-  if (partTimeCheckBox.isSelected() && !fullTimeCheckBox.isSelected()){
-    jobFilter += "part_time";
+  if (partTimeCheckBox.isSelected() && !fullTimeCheckBox.isSelected()){ // if only part time selected
+    jobFilter += "part_time"; // pass that to api
   }
   
-  else if (fullTimeCheckBox.isSelected() && !partTimeCheckBox.isSelected()){
-    jobFilter += "full_time";
+  else if (fullTimeCheckBox.isSelected() && !partTimeCheckBox.isSelected()){ //if only full time 
+    jobFilter += "full_time"; // pass that to api
   }
   
   else{
-    jobFilter = "";
+    jobFilter = ""; // else pass nothing
   }
   
-  if (!jobFilter.isEmpty()){
+  if (!jobFilter.isEmpty()){ 
     // only use jobFilter if its not empty
     url += "&" + jobFilter + "=1&content-type=" +"application/json";
   }
   
-  else{
+  else{ // if jobfilter is empty, don't pass the filter to api
     url += "&content-type=" +"application/json";
   }
 
@@ -96,8 +90,7 @@ public void searchButtonClicked(GButton source, GEvent event) { //_CODE_:searchB
    personalData = new myJobs(personalData.userName); // creating myJobs with users name
    personalData.collectionOfData(jobs); // getting data from api then fillinng it into method
    
-   println(url);
-   beganSearch = true;
+   beganSearch = true; // resetting
    
 } //_CODE_:searchButton:840559:
 
@@ -154,11 +147,11 @@ public void createGUI(){
   nameTextBox.setOpaque(true);
   nameTextBox.addEventHandler(this, "nameAdded");
   togGroup1 = new GToggleGroup();
-  salaryLabel = new GLabel(window1, 2, 94, 154, 59);
+  salaryLabel = new GLabel(window1, -4, 93, 174, 59);
   salaryLabel.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
-  salaryLabel.setText("Salary Expectation               Press Enter To Proceed");
+  salaryLabel.setText("Minimun Salary Expectation               Press Enter To Proceed");
   salaryLabel.setOpaque(false);
-  salaryTextBox = new GTextField(window1, 174, 92, 152, 47, G4P.SCROLLBARS_NONE);
+  salaryTextBox = new GTextField(window1, 182, 102, 152, 47, G4P.SCROLLBARS_NONE);
   salaryTextBox.setOpaque(true);
   salaryTextBox.addEventHandler(this, "salaryExpectationAdded");
   avalabilityPrefrence = new GLabel(window1, 10, 170, 121, 48);
