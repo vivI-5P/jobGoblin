@@ -66,13 +66,13 @@ class myJobs {
    }
     
     int y = 155;
-    fill(255);
+    fill(122,40,50);
      
     for (int i= 0; i<this.jobData.length; i++){ 
       textAlign(LEFT, TOP);
-      textSize(17);
-      text(this.jobData[i], 50,y); // show job title and link on main window to user 
-      y += 45; // keeps the job data from overlapping
+      textSize(19);
+      text(this.jobData[i], 25,y); // show job title and link on main window to user 
+      y += 55; // keeps the job data from overlapping
     }
     y = 145; //resetting
    }
